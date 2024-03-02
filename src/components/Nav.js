@@ -24,19 +24,12 @@ export function Nav({ toggleDrawer, isDrawerOpen }) {
     return (
       <nav class=" text-gray-200 w-full nav-bg">
         <div class="container mx-auto flex justify-between items-center">
-          <motion.div
+          <a
             href="#"
             class=" font-bold p-5 txt-2 text-2xl transition-transform transform hover:scale-110"
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{
-              duration: 0.3,
-              delay: 0.1,
-              ease: [0, 0.71, 0.2, 1.01],
-            }}
           >
             Sorting Visualizer
-          </motion.div>
+          </a>
           <div class="flex gap-4">
             <div class="mr-6 relative">
               <Button />

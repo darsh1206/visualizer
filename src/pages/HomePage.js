@@ -18,9 +18,9 @@ export function HomePage() {
       <div>
         <MyDrawer isOpen={isDrawerOpen} closeDrawer={closeDrawer} />
         <div
-          onClick={closeDrawer}
+          onClick={isDrawerOpen ? closeDrawer : () => {}}
           className={`${
-            isDrawerOpen ? "filter pointer-events-none" : ""
+            isDrawerOpen ? "filter blur-sm " : ""
           } flex justify-center`}
         >
           <Header />
