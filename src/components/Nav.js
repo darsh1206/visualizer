@@ -1,9 +1,8 @@
 import { ReactComponent as MyIcon1 } from "./menu.svg";
 import { ReactComponent as MyIcon2 } from "./cross.svg";
 import { motion } from "framer-motion";
-import "../color.css";
-import { hover } from "@testing-library/user-event/dist/hover";
-export function Nav({ toggleDrawer, isDrawerOpen }) {
+import "../styles.css";
+export function Nav({ toggleDrawer, isDrawerOpen, changeActiveComponent }) {
   function Button() {
     const Icon = isDrawerOpen ? MyIcon2 : MyIcon1;
     return (
@@ -24,12 +23,13 @@ export function Nav({ toggleDrawer, isDrawerOpen }) {
     return (
       <nav class=" text-gray-200 w-full nav-bg">
         <div class="container mx-auto flex justify-between items-center">
-          <a
+          <button
+            onClick={() => changeActiveComponent("default")}
             href="#"
-            class=" font-bold p-5 txt-2 text-2xl transition-transform transform hover:scale-110"
+            class=" font-bold p-5 txt-2 text-2xl transition-transform transform  hover:scale-110"
           >
             Sorting Visualizer
-          </a>
+          </button>
           <div class="flex gap-4">
             <div class="mr-6 relative">
               <Button />

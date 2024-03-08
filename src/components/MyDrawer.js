@@ -1,6 +1,6 @@
 // MyDrawer.js
-import "../color.css";
-
+import { Link } from "react-router-dom";
+import "../styles.css";
 const logSorts = ["Quick Sort", "Merge Sort", "Heap Sort"];
 const quadSorts = [
   "Bubble Sort",
@@ -9,7 +9,7 @@ const quadSorts = [
   "Odd Even Sort",
 ];
 
-export function MyDrawer({ isOpen, closeDrawer }) {
+export function MyDrawer({ isOpen, closeDrawer, changeActiveComponent }) {
   return (
     <div
       className={`fixed right-0 w-70 h-full bg-black shadow-md transform transition-transform z-20 ${
@@ -26,9 +26,15 @@ export function MyDrawer({ isOpen, closeDrawer }) {
               key={index}
               className="mb-5 transition-transform transform hover:scale-110"
             >
-              <a className=" font-bold py-2 px-4 rounded ml-10 txt links ">
+              <Link
+                to="#"
+                onClick={() =>
+                  changeActiveComponent(`${sort.replace(" ", "")}`)
+                }
+                className="font-bold py-2 px-4 rounded ml-10 txt links txt-2"
+              >
                 {sort}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
@@ -40,7 +46,7 @@ export function MyDrawer({ isOpen, closeDrawer }) {
               key={index}
               className="mb-5 transition-transform transform hover:scale-110"
             >
-              <a className=" font-bold py-2 px-4 rounded ml-10 txt links ">
+              <a className=" font-bold py-2 px-4 rounded ml-10 txt links txt-2">
                 {sort}
               </a>
             </li>

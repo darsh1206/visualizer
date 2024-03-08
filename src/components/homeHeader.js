@@ -1,8 +1,11 @@
-import "../color.css";
+import "../styles.css";
 import { motion } from "framer-motion";
-function Button() {
+function Button({ toggleDrawer }) {
   return (
-    <button className="links p-5 text-2xl font-bold txt main-btn bg-blue-500 hover:bg-blue-700 text-white transition ease-in-out duration-300 shadow-md hover:shadow-lg rounded-md">
+    <button
+      onClick={toggleDrawer}
+      className="links p-5 text-2xl font-bold txt main-btn bg-blue-500 hover:bg-blue-700 text-white transition ease-in-out duration-300 shadow-md hover:shadow-lg rounded-md"
+    >
       Get Started
     </button>
   );
@@ -23,7 +26,7 @@ function SubHeading() {
     </h1>
   );
 }
-export function Header({ drawer }) {
+export function Header({ toggleDrawer }) {
   return (
     <div className=" mb-40 flex flex-col md:flex-row justify-center items-center">
       <motion.div
@@ -34,7 +37,7 @@ export function Header({ drawer }) {
       >
         <SubHeading />
         <Heading />
-        <Button />
+        <Button toggleDrawer={toggleDrawer} />
       </motion.div>
       <div className="md:block h-auto w-2 bg-green-700"></div>
     </div>
