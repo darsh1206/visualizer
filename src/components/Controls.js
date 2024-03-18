@@ -1,4 +1,3 @@
-import { input } from "@material-tailwind/react";
 import "../styles.css";
 import { useState } from "react";
 
@@ -29,19 +28,22 @@ function Size({ size, range }) {
         onChange={handleChange}
         className="w-40 p-3 m-3 pt-7 range-slider bg-transparent"
         min="5"
+        defaultValue={10}
         max="500"
       ></input>
     </div>
   );
 }
 
-function Buttons({ random, range }) {
+function Buttons({ random, range, startBtn }) {
   const [status, setStatus] = useState(false);
 
   function changeStatus() {
     setStatus(!status);
+    if (!status) {
+      startBtn();
+    }
   }
-  console.log(range);
   return (
     <div className="">
       <button
@@ -64,7 +66,7 @@ function Buttons({ random, range }) {
     </div>
   );
 }
-export function Controls({ random, size }) {
+export function Controls({ random, size, startBtn }) {
   const [range, setRange] = useState(50);
 
   function changeRange(newRange) {
@@ -72,7 +74,7 @@ export function Controls({ random, size }) {
   }
   return (
     <div className="flex flex-row flex-wrap text-white bg-sky-900 ">
-      <Buttons random={random} range={range} />
+      <Buttons random={random} range={range} startBtn={startBtn} />
       <label className="p-2 m-3">Speed</label>
       <Speed />
       <label className="p-2 m-3 ">Array size</label>
