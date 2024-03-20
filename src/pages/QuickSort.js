@@ -28,12 +28,22 @@ export function QuickSort() {
   const delayDuration = useRef(100);
   const sorting = useRef(false);
   const paused = useRef(false);
+  const endSort = useRef(false);
 
   useEffect(() => {
     randomizeElements(arraySize);
   }, [arraySize]);
 
-  const randomizeElements = (size) => {
+  const EndSort = async () => {
+    endSort.current = true;
+    const temp = delayDuration.current;
+    delayDuration.current = 0;
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    endSort.current = false;
+    delayDuration.current = temp;
+  };
+  const randomizeElements = async (size) => {
+    await EndSort();
     const newElements = Array.from({ length: size }, () =>
       Math.floor(Math.random() * 100 + 1)
     );
@@ -61,6 +71,7 @@ export function QuickSort() {
       ]);
     }
     setPivotColour(-1);
+    dispatch({ type: "setActiveIndices", payload: [] });
   };
 
   const updateSpeed = (newSpeed) => {
@@ -73,8 +84,7 @@ export function QuickSort() {
     let i = low - 1;
 
     for (let j = low; j < high; j++) {
-      // Highlight comparison before delay
-      dispatch({ type: "setActiveIndices", payload: [j, high] });
+      dispatch({ type: "setActiveIndices", payload: [j] });
       await new Promise((resolve) =>
         setTimeout(resolve, delayDuration.current)
       );
@@ -96,7 +106,9 @@ export function QuickSort() {
           setTimeout(resolve, delayDuration.current)
         );
       }
-      if (paused.current) {
+      if (endSort.current) {
+        return;
+      } else if (paused.current) {
         await new Promise((resolve) => {
           const intervalId = setInterval(() => {
             if (!paused.current) {
@@ -112,7 +124,7 @@ export function QuickSort() {
     [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
     dispatch({ type: "setElements", payload: [...arr] });
     // Highlight pivot swap then clear
-    dispatch({ type: "setActiveIndices", payload: [i + 1, high] });
+    dispatch({ type: "setActiveIndices", payload: [i + 1] });
     dispatch({ type: "clearActiveIndices" });
 
     return i + 1;

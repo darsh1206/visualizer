@@ -34,9 +34,9 @@ export function BarGraph({ data, activeIndices, pivotColour }) {
       {data.map((value, index) => (
         <div
           key={index}
-          className={`bg-sky-200 ${
-            activeIndices.includes(index) ? "active-element" : ""
-          } ${pivotColour == index ? "pivot" : ""}`}
+          className={`bg-sky-200 hover:bg-sky-300  shadow-md ${
+            activeIndices.includes(index) ? " bg-green-600" : ""
+          } ${pivotColour == index ? "bg-red-600" : " "}`}
           style={{
             height: `${(100 * value) / maxValue}%`, // Keep using percentage for individual bars
             flex: 1,

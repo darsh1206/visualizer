@@ -38,14 +38,12 @@ function Size({ size, range }) {
 }
 
 function Buttons({ random, range, handleSortControl, sortStatus }) {
-  const [status, setStatus] = useState(false);
-
   return (
     <div className="">
       <button
         onClick={handleSortControl}
         className={`font-bold p-2 m-3 hover:${
-          !status ? " hover:bg-green-700" : " hover:bg-red-700"
+          sortStatus === "Pause" ? " hover:bg-red-700" : " hover:bg-green-700"
         } hover:text-white hover:scale-110 rounded-lg hover:shadow-md`}
       >
         {sortStatus}
