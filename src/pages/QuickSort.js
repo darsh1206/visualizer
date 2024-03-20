@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useState } from "react";
+import React, { useReducer, useEffect, useState, useRef } from "react";
 import { Controls } from "../components/Controls";
 import { BarGraph } from "../components/BarGraph";
 
@@ -22,48 +22,51 @@ function reducer(state, action) {
 
 export function QuickSort() {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [startSort, setStartSort] = useState(false);
-  const [pivotColour, setPivotColour] = useState(-1);
+  const [sortStatus, setSortStatus] = useState("Start"); // "Start", "Pause", "Resume", "Finished"
   const [arraySize, setArraySize] = useState(10);
-  const randomizeElements = (size) => {
-    setStartSort(false);
-    const newElements = Array.from(
-      { length: size },
-      () => Math.floor(Math.random() * 100 + 1) // Range changed to 1-100 for simplicity
-    );
-    dispatch({ type: "setElements", payload: newElements });
-  };
-
-  useEffect(() => {
-    if (startSort) {
-      const arrCopy = [...state.elements]; // Make a copy to sort
-      quickSort(arrCopy, 0, arrCopy.length - 1).then(() => {
-        setStartSort(false); // Reset the startSort state after sorting completes
-        setPivotColour(-1); // Reset pivot colour
-      });
-    }
-  }, [startSort]);
-
-  useEffect(() => {
-    randomizeElements(10, 50); // Initializes the array with random elements
-  }, []);
+  const [pivotColour, setPivotColour] = useState(-1);
+  const delayDuration = useRef(100);
+  const sorting = useRef(false);
+  const paused = useRef(false);
 
   useEffect(() => {
     randomizeElements(arraySize);
   }, [arraySize]);
 
+  const randomizeElements = (size) => {
+    const newElements = Array.from({ length: size }, () =>
+      Math.floor(Math.random() * 100 + 1)
+    );
+    dispatch({ type: "setElements", payload: newElements });
+    setSortStatus("Start");
+    sorting.current = false;
+  };
+
+  const waitWhilePaused = () =>
+    new Promise((resolve) => {
+      const checkPause = setInterval(() => {
+        if (!paused.current) {
+          clearInterval(checkPause);
+          resolve();
+        }
+      }, 100);
+    });
   const quickSort = async (arr, low, high) => {
     if (low < high) {
+      await waitWhilePaused();
       let pi = await partition(arr, low, high);
-
       await Promise.all([
         quickSort(arr, low, pi - 1),
         quickSort(arr, pi + 1, high),
       ]);
     }
+    setPivotColour(-1);
   };
 
-  const delayDuration = 400;
+  const updateSpeed = (newSpeed) => {
+    delayDuration.current = 800 - newSpeed;
+  };
+
   const partition = async (arr, low, high) => {
     let pivot = arr[high];
     setPivotColour(high);
@@ -72,20 +75,36 @@ export function QuickSort() {
     for (let j = low; j < high; j++) {
       // Highlight comparison before delay
       dispatch({ type: "setActiveIndices", payload: [j, high] });
-      await new Promise((resolve) => setTimeout(resolve, delayDuration));
+      await new Promise((resolve) =>
+        setTimeout(resolve, delayDuration.current)
+      );
 
       if (arr[j] < pivot) {
         i++;
         // Highlight elements to be swapped
         dispatch({ type: "setActiveIndices", payload: [i, j] });
-        await new Promise((resolve) => setTimeout(resolve, delayDuration));
+        await new Promise((resolve) =>
+          setTimeout(resolve, delayDuration.current)
+        );
 
         // Perform the swap
         [arr[i], arr[j]] = [arr[j], arr[i]];
         dispatch({ type: "setElements", payload: [...arr] });
 
         // Keep the highlight a bit after swap for visual feedback
-        await new Promise((resolve) => setTimeout(resolve, delayDuration));
+        await new Promise((resolve) =>
+          setTimeout(resolve, delayDuration.current)
+        );
+      }
+      if (paused.current) {
+        await new Promise((resolve) => {
+          const intervalId = setInterval(() => {
+            if (!paused.current) {
+              clearInterval(intervalId);
+              resolve();
+            }
+          }, 100);
+        });
       }
     }
 
@@ -99,12 +118,36 @@ export function QuickSort() {
     return i + 1;
   };
 
+  const handleSortControl = () => {
+    if (sortStatus === "Start" || sortStatus === "Resume") {
+      if (!sorting.current) {
+        sorting.current = true;
+        paused.current = false;
+        setSortStatus("Pause");
+        quickSort([...state.elements], 0, state.elements.length - 1).then(
+          () => {
+            setSortStatus("Start");
+            sorting.current = false;
+          }
+        );
+      } else {
+        paused.current = false;
+        setSortStatus("Pause");
+      }
+    } else if (sortStatus === "Pause") {
+      paused.current = true;
+      setSortStatus("Resume");
+    }
+  };
+
   return (
     <div>
       <Controls
         random={() => randomizeElements(arraySize)}
-        startBtn={() => setStartSort(true)}
-        size={(newSize) => setArraySize(newSize)}
+        handleSortControl={handleSortControl}
+        sortStatus={sortStatus}
+        size={setArraySize}
+        updateSpeed={updateSpeed}
       />
       <BarGraph
         data={state.elements}

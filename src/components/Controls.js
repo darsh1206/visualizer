@@ -1,14 +1,16 @@
 import "../styles.css";
 import { useState } from "react";
 
-function Speed() {
+function Speed({ updateSpeed }) {
   return (
     <div className="flex-row">
       <input
+        onChange={(e) => updateSpeed(e.target.value)}
         type="range"
         className=" p-3 m-3 pt-7 range-slider bg-transparent"
-        min="0"
-        max="1000"
+        min="50"
+        max="800"
+        defaultValue={700}
       ></input>
     </div>
   );
@@ -35,24 +37,18 @@ function Size({ size, range }) {
   );
 }
 
-function Buttons({ random, range, startBtn }) {
+function Buttons({ random, range, handleSortControl, sortStatus }) {
   const [status, setStatus] = useState(false);
 
-  function changeStatus() {
-    setStatus(!status);
-    if (!status) {
-      startBtn();
-    }
-  }
   return (
     <div className="">
       <button
-        onClick={changeStatus}
+        onClick={handleSortControl}
         className={`font-bold p-2 m-3 hover:${
           !status ? " hover:bg-green-700" : " hover:bg-red-700"
         } hover:text-white hover:scale-110 rounded-lg hover:shadow-md`}
       >
-        {status ? "Stop" : "Start"}
+        {sortStatus}
       </button>
       <button
         onClick={() => random(range, 50)}
@@ -66,7 +62,13 @@ function Buttons({ random, range, startBtn }) {
     </div>
   );
 }
-export function Controls({ random, size, startBtn }) {
+export function Controls({
+  random,
+  size,
+  updateSpeed,
+  handleSortControl,
+  sortStatus,
+}) {
   const [range, setRange] = useState(50);
 
   function changeRange(newRange) {
@@ -74,9 +76,14 @@ export function Controls({ random, size, startBtn }) {
   }
   return (
     <div className="flex flex-row flex-wrap text-white bg-sky-900 ">
-      <Buttons random={random} range={range} startBtn={startBtn} />
+      <Buttons
+        random={random}
+        range={range}
+        handleSortControl={handleSortControl}
+        sortStatus={sortStatus}
+      />
       <label className="p-2 m-3">Speed</label>
-      <Speed />
+      <Speed updateSpeed={updateSpeed} />
       <label className="p-2 m-3 ">Array size</label>
       <Size size={size} range={changeRange} />
     </div>
