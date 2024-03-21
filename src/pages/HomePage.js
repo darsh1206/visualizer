@@ -3,13 +3,14 @@ import { MyDrawer } from "../components/MyDrawer";
 import { Header } from "../components/homeHeader";
 import { useState } from "react";
 import { QuickSort } from "./QuickSort";
+import { MergeSort } from "./MergeSort";
 import "../styles.css";
 
 export function HomePage() {
   const Pages = {
     default: Header,
     QuickSort: QuickSort,
-    // MergeSort: MergeSort,
+    MergeSort: MergeSort,
     // HeapSort: HeapSort,
     // BubbleSort: BubbleSort,
     // SelectionSort: SelectionSort,

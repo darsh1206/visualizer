@@ -8,9 +8,9 @@ function Speed({ updateSpeed }) {
         onChange={(e) => updateSpeed(e.target.value)}
         type="range"
         className=" p-3 m-3 pt-7 range-slider bg-transparent"
-        min="50"
+        min="0"
         max="800"
-        defaultValue={700}
+        defaultValue={100}
       ></input>
     </div>
   );

@@ -1,7 +1,6 @@
 import React, { useReducer, useEffect, useState, useRef } from "react";
 import { Controls } from "../components/Controls";
 import { BarGraph } from "../components/BarGraph";
-
 const initialState = {
   elements: [],
   activeIndices: [],
@@ -24,7 +23,7 @@ export function QuickSort() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [sortStatus, setSortStatus] = useState("Start"); // "Start", "Pause", "Resume", "Finished"
   const [arraySize, setArraySize] = useState(10);
-  const [pivotColour, setPivotColour] = useState(-1);
+  const [pivotColour, setPivotColour] = useState([]);
   const delayDuration = useRef(100);
   const sorting = useRef(false);
   const paused = useRef(false);
@@ -39,6 +38,8 @@ export function QuickSort() {
     const temp = delayDuration.current;
     delayDuration.current = 0;
     await new Promise((resolve) => setTimeout(resolve, 200));
+    setPivotColour([]);
+    dispatch({ type: "setActiveIndices", payload: [] });
     endSort.current = false;
     delayDuration.current = temp;
   };
@@ -52,25 +53,26 @@ export function QuickSort() {
     sorting.current = false;
   };
 
+  // Pause the function
   const waitWhilePaused = () =>
     new Promise((resolve) => {
       const checkPause = setInterval(() => {
-        if (!paused.current) {
+        if (!paused.current || endSort.current) {
           clearInterval(checkPause);
           resolve();
         }
       }, 100);
     });
+
   const quickSort = async (arr, low, high) => {
     if (low < high) {
-      await waitWhilePaused();
       let pi = await partition(arr, low, high);
       await Promise.all([
         quickSort(arr, low, pi - 1),
         quickSort(arr, pi + 1, high),
       ]);
     }
-    setPivotColour(-1);
+
     dispatch({ type: "setActiveIndices", payload: [] });
   };
 
@@ -80,7 +82,7 @@ export function QuickSort() {
 
   const partition = async (arr, low, high) => {
     let pivot = arr[high];
-    setPivotColour(high);
+    setPivotColour([high]);
     let i = low - 1;
 
     for (let j = low; j < high; j++) {
@@ -108,15 +110,10 @@ export function QuickSort() {
       }
       if (endSort.current) {
         return;
-      } else if (paused.current) {
-        await new Promise((resolve) => {
-          const intervalId = setInterval(() => {
-            if (!paused.current) {
-              clearInterval(intervalId);
-              resolve();
-            }
-          }, 100);
-        });
+      }
+      await waitWhilePaused();
+      if (endSort.current) {
+        return;
       }
     }
 
@@ -140,6 +137,7 @@ export function QuickSort() {
           () => {
             setSortStatus("Start");
             sorting.current = false;
+            setPivotColour([]);
           }
         );
       } else {
@@ -163,8 +161,8 @@ export function QuickSort() {
       />
       <BarGraph
         data={state.elements}
-        activeIndices={state.activeIndices}
-        pivotColour={pivotColour}
+        changeGreen={state.activeIndices}
+        changeOrange={pivotColour}
       />
     </div>
   );

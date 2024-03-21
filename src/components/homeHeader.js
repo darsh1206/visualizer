@@ -28,7 +28,7 @@ function SubHeading() {
 }
 export function Header({ toggleDrawer }) {
   return (
-    <div className=" mb-40 flex flex-col md:flex-row justify-center items-center">
+    <div className="flex flex-col md:flex-row justify-center items-center">
       <motion.div
         initial={{ x: "100vw" }}
         animate={{ x: 0 }}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
-export function BarGraph({ data, activeIndices, pivotColour }) {
+export function BarGraph({ data, changeGreen, changeOrange }) {
   const graphContainerRef = useRef(null); // Ref to the graph container
   const [graphHeight, setGraphHeight] = useState("80vh"); // Default height
 
@@ -34,9 +34,9 @@ export function BarGraph({ data, activeIndices, pivotColour }) {
       {data.map((value, index) => (
         <div
           key={index}
-          className={`bg-sky-200 hover:bg-sky-300  shadow-md ${
-            activeIndices.includes(index) ? " bg-green-600" : ""
-          } ${pivotColour == index ? "bg-red-600" : " "}`}
+          className={` mx-px bg-sky-200 hover:bg-sky-300  shadow-md ${
+            changeGreen.includes(index) ? " green" : ""
+          } ${changeOrange.includes(index) ? "orange" : ""}`}
           style={{
             height: `${(100 * value) / maxValue}%`, // Keep using percentage for individual bars
             flex: 1,

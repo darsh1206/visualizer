@@ -22,7 +22,7 @@ export function Nav({ toggleDrawer, isDrawerOpen, changeActiveComponent }) {
   function NavBar() {
     return (
       <nav class=" text-gray-200 w-full nav-bg z-20">
-        <div class="container mx-auto flex justify-between items-center">
+        <div class=" mx-auto flex justify-between items-center">
           <button
             onClick={() => changeActiveComponent("default")}
             href="#"

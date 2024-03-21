@@ -120,12 +120,9 @@ input[type="range"]::-ms-fill-upper {
   border-radius: 4px;
 }
 
-.bg-sky-200 {
+.green {
+  background-color: rgb(111, 239, 111);
 }
-
-.active-element {
-  background-color: #f00; /* Red; adjust the color as desired */
-}
-.pivot {
-  background-color: darkorange;
+.orange {
+  background-color: rgb(252, 154, 74);
 }
