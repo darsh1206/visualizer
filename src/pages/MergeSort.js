@@ -1,81 +1,36 @@
 import React, { useReducer, useEffect, useState, useRef } from "react";
 import { Controls } from "../components/Controls";
 import { BarGraph } from "../components/BarGraph";
-
-const initialState = {
-  elements: [],
-  leftArray: [],
-  rightArray: [],
-};
-
-function reducer(state, action) {
-  switch (action.type) {
-    case "setElements":
-      return { ...state, elements: action.payload };
-    case "setLeftArray":
-      return { ...state, leftArray: action.payload };
-    case "setRightArray":
-      return { ...state, rightArray: action.payload };
-    default:
-      throw new Error();
-  }
-}
+import { initialState, reducer } from "../components/SorterReducer";
+import {
+  wait,
+  waitWhilePaused,
+  randomizeElements,
+  updateColours,
+  handleSortControl,
+  updateSpeed,
+} from "../components/SorterUtils";
 
 export function MergeSort() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [sortStatus, setSortStatus] = useState("Start"); // "Start", "Pause", "Resume", "Finished"
   const [arraySize, setArraySize] = useState(10);
-  const delayDuration = useRef(100);
-  delayDuration.current = 700;
+  const delay = useRef(700);
   const sorting = useRef(false);
   const paused = useRef(false);
   const endSort = useRef(false);
 
-  const randomizeElements = async (size) => {
-    await EndSort();
-    const newElements = Array.from({ length: size }, () =>
-      Math.floor(Math.random() * 100 + 1)
-    );
-    dispatch({ type: "setElements", payload: newElements });
-    setSortStatus("Start");
-    sorting.current = false;
-  };
-
   useEffect(() => {
-    randomizeElements(arraySize);
+    randomizeElements(
+      arraySize,
+      dispatch,
+      sortStatus,
+      setSortStatus,
+      sorting,
+      endSort,
+      delay
+    );
   }, [arraySize]);
-
-  const EndSort = async () => {
-    endSort.current = true;
-    const temp = delayDuration.current;
-    delayDuration.current = 0;
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    updateColours([], []);
-    endSort.current = false;
-    delayDuration.current = temp;
-  };
-
-  const updateColours = (green, orange) => {
-    dispatch({
-      type: "setLeftArray",
-      payload: green,
-    });
-    dispatch({
-      type: "setRightArray",
-      payload: orange,
-    });
-  };
-
-  // Pause the function
-  const waitWhilePaused = () =>
-    new Promise((resolve) => {
-      const checkPause = setInterval(() => {
-        if (!paused.current || endSort.current) {
-          clearInterval(checkPause);
-          resolve();
-        }
-      }, 100);
-    });
 
   const mergeSort = async (arr, l, r, dispatch) => {
     if (l >= r) {
@@ -100,7 +55,7 @@ export function MergeSort() {
     for (let i = 0; i < n1; i++) L[i] = arr[start + i];
     for (let j = 0; j < n2; j++) R[j] = arr[middle + 1 + j];
 
-    updateColours(Lindices, Rindices);
+    updateColours(dispatch, Lindices, Rindices);
 
     let i = 0,
       j = 0,
@@ -115,7 +70,7 @@ export function MergeSort() {
         // updating the coloured elements
         Rindices[Rindices.indexOf(j + middle + 1)] = k;
         Lindices[Lindices.indexOf(k)] = j + middle + 1;
-        updateColours(Lindices, Rindices);
+        updateColours(dispatch, Lindices, Rindices);
 
         j++;
       }
@@ -123,10 +78,8 @@ export function MergeSort() {
       dispatch({ type: "setElements", payload: [...arr] });
 
       if (endSort.current) return;
-      await new Promise((resolve) =>
-        setTimeout(resolve, delayDuration.current)
-      );
-      await waitWhilePaused();
+      await wait(delay.current);
+      await waitWhilePaused(paused, endSort);
     }
 
     while (i < n1) {
@@ -142,61 +95,45 @@ export function MergeSort() {
     }
 
     dispatch({ type: "setElements", payload: [...arr] });
-    await waitWhilePaused();
+    await waitWhilePaused(paused, endSort);
     if (endSort.current) return;
-    await new Promise((resolve) => setTimeout(resolve, delayDuration.current));
-    dispatch({
-      type: "setLeftArray",
-      payload: [],
-    });
-    dispatch({
-      type: "setRightArray",
-      payload: [],
-    });
-  };
-
-  const updateSpeed = (newSpeed) => {
-    delayDuration.current = 800 - newSpeed;
-  };
-
-  const handleSortControl = () => {
-    if (sortStatus === "Start" || sortStatus === "Resume") {
-      if (!sorting.current) {
-        sorting.current = true;
-        paused.current = false;
-        setSortStatus("Pause");
-        mergeSort(
-          [...state.elements],
-          0,
-          state.elements.length - 1,
-          dispatch
-        ).then(() => {
-          setSortStatus("Start");
-          sorting.current = false;
-        });
-      } else {
-        paused.current = false;
-        setSortStatus("Pause");
-      }
-    } else if (sortStatus === "Pause") {
-      paused.current = true;
-      setSortStatus("Resume");
-    }
+    await wait(delay.current);
+    updateColours(dispatch, [], []);
   };
 
   return (
     <div>
       <Controls
-        random={() => randomizeElements(arraySize)}
-        handleSortControl={handleSortControl}
+        random={() =>
+          randomizeElements(
+            arraySize,
+            dispatch,
+            sortStatus,
+            setSortStatus,
+            sorting,
+            endSort,
+            delay
+          )
+        }
+        handleSortControl={() =>
+          handleSortControl(
+            sortStatus,
+            setSortStatus,
+            sorting,
+            paused,
+            mergeSort,
+            state.elements,
+            dispatch
+          )
+        }
         sortStatus={sortStatus}
         size={setArraySize}
-        updateSpeed={updateSpeed}
+        onSpeedChange={(newSpeed) => updateSpeed(delay, newSpeed)}
       />
       <BarGraph
         data={state.elements}
-        changeGreen={state.leftArray}
-        changeOrange={state.rightArray}
+        changeGreen={state.Green}
+        changeOrange={state.Orange}
       />
     </div>
   );

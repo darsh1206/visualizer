@@ -1,16 +1,20 @@
 import "../styles.css";
 import { useState } from "react";
 
-function Speed({ updateSpeed }) {
+function Speed({ onSpeedChange }) {
+  const handleSpeedChange = (e) => {
+    const newSpeed = e.target.value;
+    onSpeedChange(newSpeed);
+  };
   return (
     <div className="flex-row">
       <input
-        onChange={(e) => updateSpeed(e.target.value)}
+        onChange={handleSpeedChange}
         type="range"
         className=" p-3 m-3 pt-7 range-slider bg-transparent"
         min="0"
         max="800"
-        defaultValue={100}
+        defaultValue={800}
       ></input>
     </div>
   );
@@ -63,7 +67,7 @@ function Buttons({ random, range, handleSortControl, sortStatus }) {
 export function Controls({
   random,
   size,
-  updateSpeed,
+  onSpeedChange,
   handleSortControl,
   sortStatus,
 }) {
@@ -81,7 +85,7 @@ export function Controls({
         sortStatus={sortStatus}
       />
       <label className="p-2 m-3">Speed</label>
-      <Speed updateSpeed={updateSpeed} />
+      <Speed onSpeedChange={onSpeedChange} />
       <label className="p-2 m-3 ">Array size</label>
       <Size size={size} range={changeRange} />
     </div>
