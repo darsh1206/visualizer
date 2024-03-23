@@ -7,6 +7,7 @@ import { MergeSort } from "./MergeSort";
 import { HeapSort } from "./HeapSort";
 import { BubbleSort } from "./BubbleSort";
 import { SelectionSort } from "./SelectionSort";
+import { InsertionSort } from "./InsertionSort";
 import "../styles.css";
 
 export function HomePage() {
@@ -17,7 +18,7 @@ export function HomePage() {
     HeapSort: HeapSort,
     BubbleSort: BubbleSort,
     SelectionSort: SelectionSort,
-    // InsertionSort: InsertionSort,
+    InsertionSort: InsertionSort,
     // OddEvenSort: OddEvenSort,
   };
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);

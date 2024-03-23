@@ -39,7 +39,7 @@ export const randomizeElements = async (
   endSort,
   delay
 ) => {
-  if (sortStatus) await EndSort(endSort, delay, dispatch);
+  if (sorting.current) await EndSort(endSort, delay, dispatch);
   const newElements = Array.from({ length: size }, () =>
     Math.floor(Math.random() * 100 + 1)
   );
