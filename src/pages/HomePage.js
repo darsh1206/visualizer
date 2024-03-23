@@ -5,6 +5,7 @@ import { useState } from "react";
 import { QuickSort } from "./QuickSort";
 import { MergeSort } from "./MergeSort";
 import { HeapSort } from "./HeapSort";
+import { BubbleSort } from "./BubbleSort";
 import "../styles.css";
 
 export function HomePage() {
@@ -13,7 +14,7 @@ export function HomePage() {
     QuickSort: QuickSort,
     MergeSort: MergeSort,
     HeapSort: HeapSort,
-    // BubbleSort: BubbleSort,
+    BubbleSort: BubbleSort,
     // SelectionSort: SelectionSort,
     // InsertionSort: InsertionSort,
     // OddEvenSort: OddEvenSort,

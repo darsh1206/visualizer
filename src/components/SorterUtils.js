@@ -11,7 +11,7 @@ export const waitWhilePaused = (paused, endSort) =>
 export const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const updateSpeed = (delay, newSpeed) => {
-  delay.current = 800 - newSpeed;
+  console.log(delay.current);
 };
 
 export const updateColours = (dispatch, Green, Orange) => {

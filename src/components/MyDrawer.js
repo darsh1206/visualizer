@@ -46,9 +46,15 @@ export function MyDrawer({ isOpen, closeDrawer, changeActiveComponent }) {
               key={index}
               className="mb-5 transition-transform transform hover:scale-110"
             >
-              <a className=" font-bold py-2 px-4 rounded ml-10 txt links txt-2">
+              <Link
+                to="#"
+                onClick={() =>
+                  changeActiveComponent(`${sort.replace(" ", "")}`)
+                }
+                className="font-bold py-2 px-4 rounded ml-10 txt links txt-2"
+              >
                 {sort}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
