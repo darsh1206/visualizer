@@ -6,6 +6,7 @@ import { QuickSort } from "./QuickSort";
 import { MergeSort } from "./MergeSort";
 import { HeapSort } from "./HeapSort";
 import { BubbleSort } from "./BubbleSort";
+import { SelectionSort } from "./SelectionSort";
 import "../styles.css";
 
 export function HomePage() {
@@ -15,7 +16,7 @@ export function HomePage() {
     MergeSort: MergeSort,
     HeapSort: HeapSort,
     BubbleSort: BubbleSort,
-    // SelectionSort: SelectionSort,
+    SelectionSort: SelectionSort,
     // InsertionSort: InsertionSort,
     // OddEvenSort: OddEvenSort,
   };

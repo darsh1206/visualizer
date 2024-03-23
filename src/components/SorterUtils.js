@@ -11,7 +11,7 @@ export const waitWhilePaused = (paused, endSort) =>
 export const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const updateSpeed = (delay, newSpeed) => {
-  console.log(delay.current);
+  delay.current = 800 - newSpeed;
 };
 
 export const updateColours = (dispatch, Green, Orange) => {
@@ -65,7 +65,8 @@ export const handleSortControl = (
       sort([...elements], 0, elements.length - 1, dispatch).then(() => {
         setSortStatus("Start");
         sorting.current = false;
-        dispatch({ type: "setOrange", payload: [] });
+        updateColours(dispatch, [], []);
+        dispatch({ type: "setRed", payload: [] });
       });
     } else {
       paused.current = false;
