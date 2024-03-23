@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 
-export function BarGraph({ data, changeGreen, changeOrange }) {
+export function BarGraph({ data, changeGreen, changeOrange, changeRed}) {
   const graphContainerRef = useRef(null); // Ref to the graph container
   const [graphHeight, setGraphHeight] = useState("80vh"); // Default height
 
-  
   useEffect(() => {
     const updateGraphHeight = () => {
       const viewportHeight = window.innerHeight;
@@ -37,7 +36,8 @@ export function BarGraph({ data, changeGreen, changeOrange }) {
           key={index}
           className={` mx-px bg-sky-200 hover:bg-sky-300  shadow-md ${
             changeGreen && changeGreen.includes(index) ? " green" : ""
-          } ${changeOrange && changeOrange.includes(index) ? "orange" : ""}`}
+          } ${changeOrange && changeOrange.includes(index) ? "orange" : ""}
+          ${changeRed && changeRed.includes(index) ? "red" : ""}`}
           style={{
             height: `${(100 * value) / maxValue}%`, // Keep using percentage for individual bars
             flex: 1,

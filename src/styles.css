@@ -126,3 +126,6 @@ input[type="range"]::-ms-fill-upper {
 .orange {
   background-color: rgb(252, 154, 74);
 }
+.red{
+  background-color: rgb(200, 59, 59);
+}

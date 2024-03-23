@@ -134,6 +134,7 @@ export function MergeSort() {
         data={state.elements}
         changeGreen={state.Green}
         changeOrange={state.Orange}
+        changeRed={state.Red}
       />
     </div>
   );

@@ -35,7 +35,7 @@ function Size({ size, range }) {
         className="w-40 p-3 m-3 pt-7 range-slider bg-transparent"
         min="5"
         defaultValue={10}
-        max="500"
+        max="250"
       ></input>
     </div>
   );

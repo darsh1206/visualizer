@@ -25,6 +25,7 @@ export const EndSort = async (endSort, delay, dispatch) => {
   delay.current = 0;
   await wait(500);
   updateColours(dispatch, [], []);
+  dispatch({ type: "setRed", payload: [] });
   endSort.current = false;
   delay.current = temp;
 };

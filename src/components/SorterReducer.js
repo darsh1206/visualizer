@@ -2,6 +2,7 @@ export const initialState = {
   elements: [],
   Green: [],
   Orange: [],
+  Red: [],
 };
 
 export const reducer = (state, action) => {
@@ -12,9 +13,9 @@ export const reducer = (state, action) => {
       return { ...state, Green: action.payload };
     case "setOrange":
       return { ...state, Orange: action.payload };
+    case "setRed":
+      return { ...state, Red: action.payload };
     default:
       throw new Error("Unhandled action type");
   }
 };
-
-

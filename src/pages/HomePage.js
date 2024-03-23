@@ -4,6 +4,7 @@ import { Header } from "../components/homeHeader";
 import { useState } from "react";
 import { QuickSort } from "./QuickSort";
 import { MergeSort } from "./MergeSort";
+import { HeapSort } from "./HeapSort";
 import "../styles.css";
 
 export function HomePage() {
@@ -11,7 +12,7 @@ export function HomePage() {
     default: Header,
     QuickSort: QuickSort,
     MergeSort: MergeSort,
-    // HeapSort: HeapSort,
+    HeapSort: HeapSort,
     // BubbleSort: BubbleSort,
     // SelectionSort: SelectionSort,
     // InsertionSort: InsertionSort,

@@ -115,6 +115,7 @@ export function QuickSort() {
         data={state.elements}
         changeGreen={state.Green}
         changeOrange={state.Orange}
+        changeRed={state.Red}
       />
     </div>
   );
