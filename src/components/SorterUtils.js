@@ -55,14 +55,26 @@ export const handleSortControl = (
   paused,
   sort,
   elements,
-  dispatch
+  dispatch,
+  endSort,
+  delay,
+  red
 ) => {
   if (sortStatus === "Start" || sortStatus === "Resume") {
     if (!sorting.current) {
       sorting.current = true;
       paused.current = false;
       setSortStatus("Pause");
-      sort([...elements], 0, elements.length - 1, dispatch).then(() => {
+      sort(
+        [...elements],
+        0,
+        elements.length - 1,
+        dispatch,
+        paused,
+        endSort,
+        delay,
+        red
+      ).then(() => {
         setSortStatus("Start");
         sorting.current = false;
         updateColours(dispatch, [], []);

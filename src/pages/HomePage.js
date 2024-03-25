@@ -2,25 +2,10 @@ import { Nav } from "../components/Nav";
 import { MyDrawer } from "../components/MyDrawer";
 import { Header } from "../components/homeHeader";
 import { useState } from "react";
-import { QuickSort } from "./QuickSort";
-import { MergeSort } from "./MergeSort";
-import { HeapSort } from "./HeapSort";
-import { BubbleSort } from "./BubbleSort";
-import { SelectionSort } from "./SelectionSort";
-import { InsertionSort } from "./InsertionSort";
+import { Visualizer } from "./Visualizer";
 import "../styles.css";
 
 export function HomePage() {
-  const Pages = {
-    default: Header,
-    QuickSort: QuickSort,
-    MergeSort: MergeSort,
-    HeapSort: HeapSort,
-    BubbleSort: BubbleSort,
-    SelectionSort: SelectionSort,
-    InsertionSort: InsertionSort,
-    // OddEvenSort: OddEvenSort,
-  };
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [activeComponent, setActiveComponent] = useState("default");
 
@@ -34,7 +19,7 @@ export function HomePage() {
     setIsDrawerOpen(false);
   };
 
-  const ActivePage = Pages[activeComponent] || Pages["default"];
+  const ActivePage = activeComponent==="default"?Header:Visualizer;
   return (
     <div className="pri-bg">
       <Nav
@@ -52,7 +37,7 @@ export function HomePage() {
           onClick={isDrawerOpen ? closeDrawer : () => {}}
           className={`${isDrawerOpen ? "filter blur-sm " : ""} `}
         >
-          <ActivePage toggleDrawer={toggleDrawer} />
+          <ActivePage toggleDrawer={toggleDrawer} name={activeComponent}/>
         </div>
       </div>
     </div>

@@ -6,7 +6,6 @@ const quadSorts = [
   "Bubble Sort",
   "Selection Sort",
   "Insertion Sort",
-  "Odd Even Sort",
 ];
 
 export function MyDrawer({ isOpen, closeDrawer, changeActiveComponent }) {

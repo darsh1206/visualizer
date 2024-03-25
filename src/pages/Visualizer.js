@@ -3,15 +3,28 @@ import { Controls } from "../components/Controls";
 import { BarGraph } from "../components/BarGraph";
 import { initialState, reducer } from "../components/SorterReducer";
 import {
-  wait,
-  waitWhilePaused,
   randomizeElements,
-  updateColours,
   handleSortControl,
   updateSpeed,
 } from "../components/SorterUtils";
+import {
+  mergeSort,
+  heapSort,
+  quickSort,
+  bubbleSort,
+  insertionSort,
+  selectionSort,
+} from "./Algorithms";
 
-export function SelectionSort() {
+const algos = {
+  MergeSort: mergeSort,
+  HeapSort: heapSort,
+  QuickSort: quickSort,
+  BubbleSort: bubbleSort,
+  InsertionSort: insertionSort,
+  SelectionSort: selectionSort,
+};
+export function Visualizer({ name }) {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [sortStatus, setSortStatus] = useState("Start"); // "Start", "Pause", "Resume", "Finished"
   const [arraySize, setArraySize] = useState(10);
@@ -19,6 +32,9 @@ export function SelectionSort() {
   const sorting = useRef(false);
   const paused = useRef(false);
   const endSort = useRef(false);
+  const algorithm = algos[name];
+  const red = [];
+
   useEffect(() => {
     randomizeElements(
       arraySize,
@@ -29,35 +45,7 @@ export function SelectionSort() {
       endSort,
       delay
     );
-  }, [arraySize]);
-
-  const selectionSort = async (arr, l, r, dispatch) => {
-    const red = [];
-    for (let i = l; i < r; i++) {
-      dispatch({ type: "setRed", payload: red });
-
-      dispatch({ type: "setOrange", payload: [i] });
-
-      // exit or pause
-      await waitWhilePaused(paused, endSort);
-      if (endSort.current) return;
-      await wait(delay.current);
-
-      for (let j = i + 1; j < r + 1; j++) {
-        dispatch({ type: "setGreen", payload: [j] });
-        if (arr[j] < arr[i]) {
-          [arr[i], arr[j]] = [arr[j], arr[i]];
-          await wait(delay.current);
-          dispatch({ type: "setElements", payload: arr });
-        }
-        // exit or pause
-        await waitWhilePaused(paused, endSort);
-        if (endSort.current) return;
-        await wait(delay.current);
-      }
-      red.push(i);
-    }
-  };
+  }, [arraySize, name]);
 
   return (
     <div>
@@ -79,14 +67,18 @@ export function SelectionSort() {
             setSortStatus,
             sorting,
             paused,
-            selectionSort,
+            algorithm,
             state.elements,
-            dispatch
+            dispatch,
+            endSort,
+            delay,
+            red
           )
         }
         sortStatus={sortStatus}
         size={setArraySize}
         onSpeedChange={(newSpeed) => updateSpeed(delay, newSpeed)}
+        name={name}
       />
       <BarGraph
         data={state.elements}
