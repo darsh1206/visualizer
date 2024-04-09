@@ -2,11 +2,7 @@
 import { Link } from "react-router-dom";
 import "../styles.css";
 const logSorts = ["Quick Sort", "Merge Sort", "Heap Sort"];
-const quadSorts = [
-  "Bubble Sort",
-  "Selection Sort",
-  "Insertion Sort",
-];
+const quadSorts = ["Bubble Sort", "Selection Sort", "Insertion Sort"];
 
 export function MyDrawer({ isOpen, closeDrawer, changeActiveComponent }) {
   return (

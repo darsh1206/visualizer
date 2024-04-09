@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 
 export function BarGraph({ data, changeGreen, changeOrange, changeRed}) {
   const graphContainerRef = useRef(null); // Ref to the graph container
-  const [graphHeight, setGraphHeight] = useState("80vh"); // Default height
+  const [graphHeight, setGraphHeight] = useState("79vh"); // Default height
 
   useEffect(() => {
     const updateGraphHeight = () => {
@@ -39,7 +39,7 @@ export function BarGraph({ data, changeGreen, changeOrange, changeRed}) {
           } ${changeOrange && changeOrange.includes(index) ? "orange" : ""}
           ${changeRed && changeRed.includes(index) ? "red" : ""}`}
           style={{
-            height: `${(100 * value) / maxValue}%`, // Keep using percentage for individual bars
+            height: `${(100 * value) / maxValue}%`,
             flex: 1,
             marginRight: "0.05rem",
           }}

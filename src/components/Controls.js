@@ -14,7 +14,7 @@ function Speed({ onSpeedChange }) {
         className=" p-3 m-3 pt-7 range-slider bg-transparent"
         min="0"
         max="800"
-        defaultValue={800}
+        defaultValue={100}
       ></input>
     </div>
   );
@@ -58,9 +58,6 @@ function Buttons({ random, range, handleSortControl, sortStatus }) {
       >
         Randomize
       </button>
-      <button className="font-bold p-2 m-3 hover:bg-cyan-700 active:bg-cyan-600 hover:text-white hover:scale-110 rounded-lg hover:shadow-md">
-        Custom Values
-      </button>
     </div>
   );
 }
@@ -70,6 +67,7 @@ export function Controls({
   onSpeedChange,
   handleSortControl,
   sortStatus,
+  name,
 }) {
   const [range, setRange] = useState(50);
 
@@ -86,8 +84,11 @@ export function Controls({
       />
       <label className="p-2 m-3">Speed</label>
       <Speed onSpeedChange={onSpeedChange} />
-      <label className="p-2 m-3 ">Array size</label>
+      <label className="p-2 m-3 ">Size</label>
       <Size size={size} range={changeRange} />
+      <div className=" ml-auto text-rose-400 font-bold m-5 text-lg">
+        {name.replace("S", " S")}
+      </div>
     </div>
   );
 }

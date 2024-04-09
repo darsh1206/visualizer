@@ -1,9 +1,10 @@
 import { Nav } from "../components/Nav";
 import { MyDrawer } from "../components/MyDrawer";
 import { Header } from "../components/homeHeader";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Visualizer } from "./Visualizer";
 import "../styles.css";
+import { Implementations } from "../components/Implementations";
 
 export function HomePage() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -19,7 +20,8 @@ export function HomePage() {
     setIsDrawerOpen(false);
   };
 
-  const ActivePage = activeComponent==="default"?Header:Visualizer;
+  const ActivePage = activeComponent === "default" ? Header : Visualizer;
+
   return (
     <div className="pri-bg">
       <Nav
@@ -37,7 +39,8 @@ export function HomePage() {
           onClick={isDrawerOpen ? closeDrawer : () => {}}
           className={`${isDrawerOpen ? "filter blur-sm " : ""} `}
         >
-          <ActivePage toggleDrawer={toggleDrawer} name={activeComponent}/>
+          <ActivePage toggleDrawer={toggleDrawer} name={activeComponent} />
+          <Implementations name={activeComponent} />
         </div>
       </div>
     </div>

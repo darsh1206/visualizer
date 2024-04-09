@@ -1,13 +1,17 @@
 import "../styles.css";
 import { motion } from "framer-motion";
+
 function Button({ toggleDrawer }) {
   return (
-    <button
+    <motion.div
+      whileHover={{ scale: 1.2 }}
+      whileTap={{ scale: 0.9 }}
+      transition={{ type: "spring", stiffness: 400, damping: 17 }}
       onClick={toggleDrawer}
-      className="links p-5 text-2xl font-bold txt main-btn bg-blue-500 hover:bg-blue-700 text-white transition ease-in-out duration-300 shadow-md hover:shadow-lg rounded-md"
+      className="box links p-5 text-2xl font-bold txt bg-blue-500 hover:bg-blue-700 text-white shadow-md hover:shadow-lg rounded-md"
     >
       Get Started
-    </button>
+    </motion.div>
   );
 }
 
