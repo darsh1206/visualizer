@@ -29,8 +29,8 @@ export const heapSort = async (
     // Move current root to end
     [arr[0], arr[i]] = [arr[i], arr[0]];
     dispatch({ type: "setElements", payload: [...arr] });
-    updateColours(dispatch, [0, i], []); // Update colours to highlight the swap
-    await wait(delay.current); // Introduce a delay for visualization
+    updateColours(dispatch, [0, i], []); 
+    await wait(delay.current); 
 
     red.push(i);
     dispatch({ type: "setRed", payload: [...red] });

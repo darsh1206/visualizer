@@ -1,0 +1,60 @@
+{
+  "default": {
+    "description": "Hi",
+    "complexities": {}
+  },
+  "QuickSort": {
+    "description": "Quick Sort is a highly efficient sorting algorithm renowned for its speed and adaptability across a wide range of scenarios. It operates by partitioning elements based on a chosen pivot, then recursively sorting the resulting sub-arrays. Its reliability stems from its ability to handle large datasets with ease, leveraging a divide-and-conquer approach to achieve optimal performance. Quick Sort finds extensive use in diverse applications, including database management, data analysis, and computational biology. Its versatility and robustness make it a cornerstone algorithm in various fields, offering unparalleled sorting capabilities even in the face of complex data structures and dynamic environments.",
+    "complexities": {
+      "Average Case": "O(n log n)",
+      "Best Case": "O(n log n)",
+      "Worst Case": "O(n^2)",
+      "Space Complexity": "O(log n)"
+    }
+  },
+  "MergeSort": {
+    "description": "Merge Sort is a robust sorting algorithm known for its stability and consistent performance across different datasets. It employs a divide-and-conquer strategy to break down the input array into smaller, more manageable sub-arrays, sorting them individually before merging them back together. This approach ensures reliability and predictability, making Merge Sort suitable for a wide range of applications. From sorting large datasets in databases to organizing elements in graphical user interfaces, Merge Sort offers a versatile solution for various sorting challenges. Its stability and efficiency make it a popular choice in scenarios where reliability and scalability are paramount.",
+    "complexities": {
+      "Average Case": "O(n log n)",
+      "Best Case": "O(n log n)",
+      "Worst Case": "O(n log n)",
+      "Space Complexity": "O(n)"
+    }
+  },
+  "HeapSort": {
+    "description": "Heap Sort is a highly efficient sorting algorithm that utilizes a binary heap data structure to organize elements. It operates by constructing a max-heap from the input array, repeatedly extracting the maximum element and adjusting the heap until all elements are sorted. Heap Sort's exceptional performance and versatility make it suitable for diverse applications, ranging from numerical analysis to network routing algorithms. Its ability to handle large datasets efficiently and adapt to dynamic environments underscores its reliability in critical systems.",
+    "complexities": {
+      "Average Case": "O(n log n)",
+      "Best Case": "O(n log n)",
+      "Worst Case": "O(n log n)",
+      "Space Complexity": "O(1)"
+    }
+  },
+  "BubbleSort": {
+    "description": "Bubble Sort is a straightforward sorting algorithm characterized by its simplicity and ease of implementation. It iterates through the input array multiple times, comparing adjacent elements and swapping them if they are in the wrong order. Although Bubble Sort's simplicity makes it easy to understand and implement, its performance tends to degrade significantly with larger datasets. Despite its limitations, Bubble Sort finds occasional use in educational contexts and small-scale applications where simplicity outweighs efficiency.",
+    "complexities": {
+      "Average Case": "O(n^2)",
+      "Best Case": "O(n)",
+      "Worst Case": "O(n^2)",
+      "Space Complexity": "O(1)"
+    }
+  },
+  "SelectionSort": {
+    "description": "Selection Sort is a simple yet effective sorting algorithm that iteratively selects the smallest (or largest) element from the unsorted portion of the array and places it in its correct position. It continues this process until all elements are sorted. While Selection Sort's simplicity makes it easy to implement, its performance is typically slower compared to more advanced sorting algorithms like Merge Sort or Quick Sort. However, Selection Sort's straightforward logic and minimal memory requirements make it suitable for small datasets or situations where simplicity is preferred over speed.",
+    "complexities": {
+      "Average Case": "O(n^2)",
+      "Best Case": "O(n^2)",
+      "Worst Case": "O(n^2)",
+      "Space Complexity": "O(1)"
+    }
+  },
+  "InsertionSort": {
+    "description": "Insertion Sort is a stable and adaptive sorting algorithm that builds the final sorted array one element at a time by repeatedly inserting each element into its proper position. It iterates through the array, comparing each element with those before it and shifting elements to the right until finding the correct position for insertion. Insertion Sort's efficiency shines in scenarios where the dataset is nearly sorted or consists of a small number of elements. Its simplicity, stability, and adaptability make it a valuable tool in various applications, including online algorithms and incremental sorting tasks.",
+    "complexities": {
+      "Average Case": "O(n^2)",
+      "Best Case": "O(n)",
+      "Worst Case": "O(n^2)",
+      "Space Complexity": "O(1)"
+    }
+  }
+}

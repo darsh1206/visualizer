@@ -1,16 +1,27 @@
 // MyDrawer.js
 import { Link } from "react-router-dom";
 import "../styles.css";
+import { Button } from "./Nav";
+
 const logSorts = ["Quick Sort", "Merge Sort", "Heap Sort"];
 const quadSorts = ["Bubble Sort", "Selection Sort", "Insertion Sort"];
 
-export function MyDrawer({ isOpen, closeDrawer, changeActiveComponent }) {
+export function MyDrawer({
+  isOpen,
+  closeDrawer,
+  changeActiveComponent,
+  toggleDrawer,
+  isDrawerOpen,
+}) {
   return (
     <div
-      className={`fixed right-0 w-70 h-full bg-black shadow-md transform transition-transform z-20 ${
+      className={`fixed right-0 w-70 h-full bg-black pt-20 shadow-md transform transition-transform z-20 ${
         isOpen ? "translate-x-0" : "translate-x-full"
       } nav-bg`}
     >
+      <div className=" m-3 absolute top-3 right-3">
+        <Button toggleDrawer={toggleDrawer} isDrawerOpen={isDrawerOpen} />
+      </div>
       <div className="p-8 text-white pt-5 text-right">
         <h1 className="text-2xl mb-10 font-bold txt-2">Sorting Algorithms</h1>
 

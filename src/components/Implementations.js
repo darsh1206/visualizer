@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import data from "./sorts.json";
+import data from "../data/sorts.json";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { materialLight } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { Tab, Tabs } from "@mui/material";
@@ -52,7 +52,7 @@ export function Implementations({ name }) {
 
   return (
     <motion.div
-      className="shadow-lg p-4 flex justify-center my-28"
+      className="p-4 flex justify-center my-28"
       initial={{ opacity: 0, scale: 0.1 }}
       animate={isVisible ? { opacity: 1, scale: 1 } : {}}
       transition={{
@@ -61,7 +61,7 @@ export function Implementations({ name }) {
         scale: { damping: 10, stiffness: 100 },
       }}
     >
-      <div className="bg-lightGray rounded-lg overflow-hidden w-11/12">
+      <div className="bg-lightGray rounded-2xl overflow-hidden w-11/12 shadow-2xl">
         {selectedLanguage && (
           <div className="bg-slate-800 rounded-md p-5">
             <div className="text-3xl font-bold text-slate-400 py-5 px-5">
@@ -73,7 +73,7 @@ export function Implementations({ name }) {
               variant="scrollable"
               scrollButtons="auto"
               aria-label="scrollable auto tabs example"
-              sx={{ "& .MuiTabs-indicator": { display: "none" } }}
+              indicatorColor="none"
             >
               {Object.keys(implementations).map((language, index) => (
                 <Tab
@@ -97,6 +97,7 @@ export function Implementations({ name }) {
               <SyntaxHighlighter
                 language={selectedLanguage}
                 style={materialLight}
+                className="shadow-2xl rounded-2xl"
               >
                 {Array.isArray(implementations[selectedLanguage])
                   ? implementations[selectedLanguage].join("\n")

@@ -26,7 +26,7 @@ const algos = {
 };
 export function Visualizer({ name }) {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [sortStatus, setSortStatus] = useState("Start"); // "Start", "Pause", "Resume", "Finished"
+  const [sortStatus, setSortStatus] = useState("Start"); 
   const [arraySize, setArraySize] = useState(10);
   const delay = useRef(700);
   const sorting = useRef(false);

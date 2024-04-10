@@ -27,6 +27,9 @@
 .txt-2 {
   color: var(--caret-color);
 }
+.bg-txt-2 {
+  background-color: var(--caret-color);
+}
 .nav-btn:hover {
   background-color: var(--sub-alt-color);
 }
