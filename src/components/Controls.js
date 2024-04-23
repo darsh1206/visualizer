@@ -109,7 +109,7 @@ function Buttons({ random, range, handleSortControl, sortStatus, list }) {
       </button>
       <button
         onClick={() => random(range, 50)}
-        className="font-bold p-2 m-3 sm:p-0 text-sm md:text-base lg:text-sm hover:bg-cyan-700 active:bg-cyan-600 hover:text-white hover:scale-110 rounded-lg hover:shadow-md"
+        className="font-bold p-2 m-3 text-sm md:text-base lg:text-sm hover:bg-cyan-700 active:bg-cyan-600 hover:text-white hover:scale-110 rounded-lg hover:shadow-md"
       >
         Randomize
       </button>

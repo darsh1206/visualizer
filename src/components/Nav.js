@@ -23,8 +23,6 @@ export function Nav({ toggleDrawer, isDrawerOpen, changeActiveComponent }) {
       <nav class=" text-gray-200 w-full nav-bg z-101">
         <div class=" mx-auto flex justify-between items-center">
           <button
-            onClick={() => changeActiveComponent("default")}
-            href="#"
             class=" font-bold p-5 txt-2 text-2xl transition-transform transform hover:scale-110"
           >
             Sorting Visualizer
