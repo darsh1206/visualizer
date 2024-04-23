@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import data from "../data/sorts.json";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { materialLight } from "react-syntax-highlighter/dist/cjs/styles/prism";
@@ -10,19 +10,32 @@ export function Implementations({ name }) {
   const [selectedLanguage, setSelectedLanguage] = useState("");
   const [currentTabIndex, setCurrentTabIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  const containerRef = useRef(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const bottom = window.innerHeight + window.scrollY;
-      const threshold = document.body.offsetHeight * 0.8;
-      setIsVisible(bottom > threshold);
+    const observerOptions = {
+      root: null, // Observe the viewport
+      threshold: 0.2, // Trigger when 60% is visible
     };
 
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
+    // Observer for scrolling down (element entering from top)
+    const observerTop = new IntersectionObserver(([entry]) => {
+      setIsVisible(entry.isIntersecting);
+    }, observerOptions);
+
+    // Observer for scrolling up (element entering from bottom)
+    const observerBottom = new IntersectionObserver(([entry]) => {
+      setIsVisible(entry.isIntersecting);
+    }, observerOptions);
+
+    if (containerRef.current) {
+      observerTop.observe(containerRef.current);
+      observerBottom.observe(containerRef.current);
+    }
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      if (observerTop) observerTop.disconnect();
+      if (observerBottom) observerBottom.disconnect();
     };
   }, []);
 
@@ -52,18 +65,20 @@ export function Implementations({ name }) {
 
   return (
     <motion.div
-      className="p-4 flex justify-center my-28"
+      className="cont-box flex justify-center"
       initial={{ opacity: 0, scale: 0.1 }}
+      whileInView={{ opacity: 1, scale: 1 }}
       animate={isVisible ? { opacity: 1, scale: 1 } : {}}
       transition={{
         duration: 0.5,
         ease: [0, 0.71, 0.2, 1.01],
         scale: { damping: 10, stiffness: 100 },
       }}
+      ref={containerRef}
     >
-      <div className="bg-lightGray rounded-2xl overflow-hidden w-11/12 shadow-2xl">
+      <div className="bg-lightGray rounded-2xl overflow-hidden w-11/12 shadow-2xl max-w-6xl">
         {selectedLanguage && (
-          <div className="bg-slate-800 rounded-md p-5">
+          <div className="bg-slate-800 rounded-md p-6">
             <div className="text-3xl font-bold text-slate-400 py-5 px-5">
               Implementations
             </div>

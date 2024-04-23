@@ -21,12 +21,12 @@ const algos = {
   HeapSort: heapSort,
   QuickSort: quickSort,
   BubbleSort: bubbleSort,
-  InsertionSort: insertionSort,
   SelectionSort: selectionSort,
+  InsertionSort: insertionSort,
 };
-export function Visualizer({ name }) {
+export function Visualizer({ name, changeActiveComponent }) {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [sortStatus, setSortStatus] = useState("Start"); 
+  const [sortStatus, setSortStatus] = useState("Start");
   const [arraySize, setArraySize] = useState(10);
   const delay = useRef(700);
   const sorting = useRef(false);
@@ -50,6 +50,8 @@ export function Visualizer({ name }) {
   return (
     <div>
       <Controls
+        list={algos}
+        changeActiveComponent={changeActiveComponent}
         random={() =>
           randomizeElements(
             arraySize,

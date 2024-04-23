@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
-export function BarGraph({ data, changeGreen, changeOrange, changeRed}) {
+export function BarGraph({ data, changeGreen, changeOrange, changeRed }) {
   const graphContainerRef = useRef(null); // Ref to the graph container
   const [graphHeight, setGraphHeight] = useState("79vh"); // Default height
 
@@ -10,7 +10,7 @@ export function BarGraph({ data, changeGreen, changeOrange, changeRed}) {
       if (graphContainerRef.current) {
         const graphTop = graphContainerRef.current.getBoundingClientRect().top;
         const availableHeight = viewportHeight - graphTop; // Calculate available height
-        setGraphHeight(`${availableHeight}px`); // Set height in px
+        setGraphHeight(`${availableHeight - 5}px`); // Set height in px
       }
     };
 

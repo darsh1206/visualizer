@@ -1,15 +1,14 @@
 import { Nav } from "../components/Nav";
-import { MyDrawer } from "../components/MyDrawer";
-import { Header } from "../components/homeHeader";
 import { useState } from "react";
 import { Visualizer } from "./Visualizer";
 import "../styles.css";
 import { Implementations } from "../components/Implementations";
 import { Description } from "../components/Description";
+import { Footer } from "../components/Footer";
 
 export function HomePage() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [activeComponent, setActiveComponent] = useState("default");
+  const [activeComponent, setActiveComponent] = useState("QuickSort");
 
   const changeActiveComponent = (component) => {
     setActiveComponent(component);
@@ -21,45 +20,32 @@ export function HomePage() {
     setIsDrawerOpen(false);
   };
 
-  const ActivePage = activeComponent === "default" ? Header : Visualizer;
-  const DescriptionPage = activeComponent === "default" ? "div" : Description;
-
   return (
     <div className="pri-bg">
-      <MyDrawer
-        isOpen={isDrawerOpen}
-        closeDrawer={closeDrawer}
-        toggleDrawer={toggleDrawer}
-        isDrawerOpen={isDrawerOpen}
-        changeActiveComponent={changeActiveComponent}
-      />
+      <div>
+        <Nav toggleDrawer={toggleDrawer} isDrawerOpen={isDrawerOpen} />
+      </div>
       <div
         className={`${
           isDrawerOpen ? "filter blur-sm pointer-events-none" : ""
         } `}
       >
-        <Nav
-          toggleDrawer={toggleDrawer}
-          isDrawerOpen={isDrawerOpen}
-          changeActiveComponent={changeActiveComponent}
-        />
-        <div
-          onClick={isDrawerOpen ? closeDrawer : () => {}}
-          
-        >
+        <div onClick={isDrawerOpen ? closeDrawer : () => {}}>
           <div className="pb-20">
-            <ActivePage toggleDrawer={toggleDrawer} name={activeComponent} />
+            <Visualizer
+              toggleDrawer={toggleDrawer}
+              name={activeComponent}
+              changeActiveComponent={changeActiveComponent}
+            />
           </div>
-          <hr></hr>
-          <div
-            className={`bg-slate-800 ${
-              activeComponent !== "default" ? "py-32" : ""
-            }`}
-          >
-            <DescriptionPage name={activeComponent} />
+
+          <div className="flex flex-col items-center md:flex-row justify-center align-middle bg-slate-800 py-32">
+            <Description name={activeComponent} />
           </div>
-          <hr></hr>
-          <Implementations name={activeComponent} />
+          <div className="py-20">
+            <Implementations name={activeComponent} />
+          </div>
+          <Footer />
         </div>
       </div>
     </div>

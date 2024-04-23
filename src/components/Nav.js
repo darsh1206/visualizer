@@ -2,21 +2,21 @@ import { ReactComponent as MyIcon1 } from "./menu.svg";
 import { ReactComponent as MyIcon2 } from "./cross.svg";
 import { motion } from "framer-motion";
 import "../styles.css";
-export function Button({toggleDrawer,isDrawerOpen}) {
-  const Icon = isDrawerOpen ? MyIcon2 : MyIcon1;
-  return (
-    <motion.div
-      onClick={toggleDrawer}
-      className="container px-2 py-2 rounded pri-bg txt-clr nav-btn cursor-pointer"
-      initial={{ opacity: 0, scale: 0.5 }}
-      animate={{ opacity: 1, scale: 1 }}
-      whileHover={{ scale: 1.2, rotate: 90 }}
-      whileTap={{ scale: 0.8, rotate: -90, borderRadius: "100%" }}
-    >
-      <Icon />
-    </motion.div>
-  );
-}
+// export function Button({toggleDrawer,isDrawerOpen}) {
+//   const Icon = isDrawerOpen ? MyIcon2 : MyIcon1;
+//   return (
+//     <motion.div
+//       onClick={toggleDrawer}
+//       className="container px-2 py-2 rounded pri-bg txt-clr nav-btn cursor-pointer"
+//       initial={{ opacity: 0, scale: 0.5 }}
+//       animate={{ opacity: 1, scale: 1 }}
+//       whileHover={{ scale: 1.2, rotate: 90 }}
+//       whileTap={{ scale: 0.8, rotate: -90, borderRadius: "100%" }}
+//     >
+//       <Icon />
+//     </motion.div>
+//   );
+// }
 export function Nav({ toggleDrawer, isDrawerOpen, changeActiveComponent }) {
   function NavBar() {
     return (
@@ -31,7 +31,7 @@ export function Nav({ toggleDrawer, isDrawerOpen, changeActiveComponent }) {
           </button>
           <div class="flex gap-4">
             <div class="mr-6 relative">
-              <Button toggleDrawer={toggleDrawer} isDrawerOpen={isDrawerOpen} />
+              {/* <Button toggleDrawer={toggleDrawer} isDrawerOpen={isDrawerOpen} /> */}
             </div>
           </div>
         </div>
