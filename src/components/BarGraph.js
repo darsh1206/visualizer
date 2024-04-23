@@ -3,7 +3,8 @@ import React, { useState, useEffect, useRef } from "react";
 export function BarGraph({ data, changeGreen, changeOrange, changeRed }) {
   const graphContainerRef = useRef(null); // Ref to the graph container
   const [graphHeight, setGraphHeight] = useState("79vh"); // Default height
-  const [initialViewportHeight, setInitialViewportHeight] = useState(0); // Initialize initial viewport height
+  const [initialViewportHeight, setInitialViewportHeight] = useState(0);
+  const [setme, setSetMe] = useState(false);
 
   useEffect(() => {
     // Update initial viewport height when the component mounts
@@ -12,11 +13,12 @@ export function BarGraph({ data, changeGreen, changeOrange, changeRed }) {
     const updateGraphHeight = () => {
       if (graphContainerRef.current) {
         const graphTop = graphContainerRef.current.getBoundingClientRect().top;
-        const scrollBarHeight =
-          window.innerWidth - document.documentElement.clientWidth;
-        const availableHeight =
-          window.innerHeight - graphTop - scrollBarHeight; // Calculate available height using updated viewport height
-        setGraphHeight(`${availableHeight - 5}px`); // Set height in px
+        const availableHeight = window.innerHeight - graphTop - window.scrollY; // Calculate available height using updated viewport height
+
+        if (setme === false) {
+          setSetMe(true);
+          setGraphHeight(`${availableHeight - 5}px`); // Set height in px
+        }
       }
     };
 
@@ -26,7 +28,7 @@ export function BarGraph({ data, changeGreen, changeOrange, changeRed }) {
 
     // Cleanup
     return () => window.removeEventListener("resize", updateGraphHeight);
-  }, []); // Update graph height when initial viewport height changes
+  }, [initialViewportHeight]); // Update graph height when initial viewport height changes
 
   // Calculate the maximum value to base the height percentages off
   const maxValue = Math.max(...data);
