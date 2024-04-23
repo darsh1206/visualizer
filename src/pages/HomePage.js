@@ -1,5 +1,5 @@
 import { Nav } from "../components/Nav";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Visualizer } from "./Visualizer";
 import "../styles.css";
 import { Implementations } from "../components/Implementations";
@@ -20,17 +20,27 @@ export function HomePage() {
     setIsDrawerOpen(false);
   };
 
+  useEffect(() => {
+    const scrollToTop = () => {
+      window.scrollTo({ top: 0, behavior: "smooth" }); // Scroll to the top of the page with smooth behavior
+    };
+
+    // Call scrollToTop when the component mounts or when the page is refreshed
+    window.onload = scrollToTop;
+
+    // Cleanup
+    return () => {
+      window.onload = null; // Remove the onload event handler when the component unmounts
+    };
+  }, []);
+
   return (
     <div className="pri-bg">
       <div>
         <Nav toggleDrawer={toggleDrawer} isDrawerOpen={isDrawerOpen} />
       </div>
-      <div
-        className={`${
-          isDrawerOpen ? "filter blur-sm pointer-events-none" : ""
-        } `}
-      >
-        <div onClick={isDrawerOpen ? closeDrawer : () => {}}>
+      <div>
+        <div>
           <div className="pb-20">
             <Visualizer
               toggleDrawer={toggleDrawer}

@@ -17,9 +17,9 @@ import {
 } from "./Algorithms";
 
 const algos = {
+  QuickSort: quickSort,
   MergeSort: mergeSort,
   HeapSort: heapSort,
-  QuickSort: quickSort,
   BubbleSort: bubbleSort,
   SelectionSort: selectionSort,
   InsertionSort: insertionSort,

@@ -71,7 +71,7 @@ export function Implementations({ name }) {
       animate={isVisible ? { opacity: 1, scale: 1 } : {}}
       transition={{
         duration: 0.5,
-        ease: [0, 0.71, 0.2, 1.01],
+        ease: [0.25, 0.8, 0.25, 1],
         scale: { damping: 10, stiffness: 100 },
       }}
       ref={containerRef}
